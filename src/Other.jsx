@@ -1,10 +1,12 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 const Other = () => {
+	const { name, department } = useParams()
+
 	return (
 		<div>
-			<p>Другая страница</p>
+			<p>{name || department}</p>
 			<Link to={'/'}>На главную</Link>
 		</div>
 	)

@@ -1,4 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web'
+import { observer } from 'mobx-react-lite'
 import { useContext, useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
@@ -8,7 +9,7 @@ import Other from './Other'
 import Protect from './Protect'
 import { Context } from './main'
 
-function App() {
+const App = observer(() => {
 	const { keycloak, initialized } = useKeycloak()
 
 	const logout = () => {
@@ -49,6 +50,7 @@ function App() {
 
 	return (
 		<>
+			<div>{user.user.username}</div>
 			<button onClick={logout}>Выйти</button>
 			<Routes>
 				<Route path={'/login'} element={<Login />} />
@@ -61,9 +63,17 @@ function App() {
 					}
 				/>
 				<Route
-					path={'/other'}
+					path={'/otherEmp/:name'}
 					element={
-						<Protect role='user'>
+						<Protect role={['user', 'ADMIN']}>
+							<Other />
+						</Protect>
+					}
+				/>
+				<Route
+					path={'/otherDep/:department'}
+					element={
+						<Protect role={['user', 'ADMIN']}>
 							<Other />
 						</Protect>
 					}
@@ -72,6 +82,6 @@ function App() {
 			</Routes>
 		</>
 	)
-}
+})
 
 export default App
