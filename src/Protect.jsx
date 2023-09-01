@@ -36,13 +36,17 @@ const Protect = observer(({ children, role }) => {
 		if (user.user.role.includes('ADMIN')) {
 			return children
 		}
+
 		// Если доступ к ролям есть проверяем передана ли роль
 		if (role) {
 			// Если роль передана проверяем есть ли она у пользователя
 			if (role.filter(element => user.user.role.includes(element)).length) {
 				// Если роль есть проверяем есть ли доступ к этой странице (name находится на странице перехода)
-				console.log(department)
-				if (name && user.user.children?.includes(name)) {
+				console.log(name, user.user.fio)
+				if (
+					name &&
+					(user.user.children?.includes(name) || name == user.user.fio)
+				) {
 					// Если доступ есть отдаем эту страницу
 					return children
 				} else if (department && user.user.departments?.includes(department)) {

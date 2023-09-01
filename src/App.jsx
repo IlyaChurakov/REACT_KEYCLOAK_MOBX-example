@@ -8,6 +8,8 @@ import Login from './Login'
 import Other from './Other'
 import Protect from './Protect'
 import { Context } from './main'
+import Departments from './pages/Departments'
+import Leaders from './pages/Leaders'
 
 const App = observer(() => {
 	const { keycloak, initialized } = useKeycloak()
@@ -75,6 +77,22 @@ const App = observer(() => {
 					element={
 						<Protect role={['user', 'ADMIN']}>
 							<Other />
+						</Protect>
+					}
+				/>
+				<Route
+					path={'/leaders'}
+					element={
+						<Protect role={['ADMIN']}>
+							<Leaders />
+						</Protect>
+					}
+				/>
+				<Route
+					path={'/leaders/:name'}
+					element={
+						<Protect role={['user']}>
+							<Departments />
 						</Protect>
 					}
 				/>
